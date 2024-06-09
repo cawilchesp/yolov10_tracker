@@ -30,6 +30,7 @@ class VideoInfo:
             source_info = from_video_path(cap)
             source_flag = 'video'
         cap.release()
+        
         return source_info, source_flag
 
 
