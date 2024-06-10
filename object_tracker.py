@@ -23,7 +23,7 @@ def main(
     source: str = '0',
     output: str = 'output',
     weights: str = 'yolov10b.pt',
-    class_filter: list[int] = [],
+    class_filter: list[int] = None,
     image_size: int = 640,
     confidence: int = 0.5,
 ) -> None:
@@ -60,9 +60,7 @@ def main(
     trace_annotator = sv.TraceAnnotator(position=sv.Position.CENTER, trace_length=50, thickness=line_thickness)
     
     # Variables
-    progress_times = {}
     results_data = []
-    csv_path = None
 
     # Iniciar procesamiento de video
     step_message(next(step_count), 'Procesamiento de Video Iniciado ✅')
@@ -101,7 +99,7 @@ def main(
             detections = tracker.update_with_detections(detections)
                 
             # Save object data in list
-            results_data = output_data_list(results_data, frame_number, detections, results.names)
+            results_data = output_data_list(results_data, frame_number, detections)
 
             # Draw labels
             object_labels = [f"{data['class_name']} {tracker_id} ({score:.2f})" for _, _, score, _, tracker_id, data in detections]
