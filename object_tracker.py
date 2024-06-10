@@ -144,6 +144,7 @@ def main(
     fps.stop()
     step_message(next(step_count), f"Elapsed Time: {fps.elapsed():.2f} s")
     step_message(next(step_count), f"FPS: {fps.fps():.2f}")
+    output_writer.release()
     
     cv2.destroyAllWindows()
     video_stream.stop()
