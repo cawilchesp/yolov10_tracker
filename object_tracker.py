@@ -114,6 +114,12 @@ def main(
             annotated_image = bounding_box_annotator.annotate(
                 scene=annotated_image,
                 detections=detections )
+            
+            # Draw tracks
+            if detections.tracker_id is not None:
+                annotated_image = trace_annotator.annotate(
+                    scene=annotated_image,
+                    detections=detections )
 
             # Save results
             output_writer.write(annotated_image)
@@ -135,7 +141,7 @@ def main(
     except KeyboardInterrupt:
         step_message(next(step_count), 'Fin del video ✅')
     step_message(next(step_count), 'Guardando Resultados en el último CSV ✅')
-    write_csv(f"{csv_path}.csv", results_data)
+    write_csv(f"{output}.csv", results_data)
     
     fps.stop()
     step_message(next(step_count), f"Elapsed Time: {fps.elapsed():.2f} s")
