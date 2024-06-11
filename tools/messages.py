@@ -55,7 +55,7 @@ def source_message(source: str, video_info: VideoInfo):
     print(f"\n{green('*'*text_length)}\n")
     
 
-def progress_message(frame_number: int, total_frames: int):
+def progress_message(frame_number: int, total_frames: int, fps_value: float):
     if total_frames is not None:
         percentage = f"[ {frame_number/total_frames:6.1%} ] "
         frame_progress = f"{frame_number} / {total_frames}"
@@ -67,8 +67,8 @@ def progress_message(frame_number: int, total_frames: int):
     
     frame_text_length = (2 * len(str(total_frames))) + 3
     if frame_number == 0:
-        print(f"\n{percentage_title}{bold('Frame'):>{frame_text_length+9}}")
-    print(f"\r{green(percentage)}{frame_progress:>{frame_text_length}}  ", end="", flush=True)
+        print(f"\n{percentage_title}{bold('Frame'):>{frame_text_length+9}}{bold('FPS'):>22}")
+    print(f"\r{green(percentage)}{frame_progress:>{frame_text_length}}     {fps_value:8.2f}  ", end="", flush=True)
     
 
 def print_times(frame_number: int, total_frames: int, progress_times: dict):
