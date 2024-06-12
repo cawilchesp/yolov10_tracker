@@ -8,13 +8,13 @@ from pathlib import Path
 
 from imutils.video import FileVideoStream, WebcamVideoStream
 
-from sinks.detection_sink import DetectionSink
+from sinks.model_sink import ModelSink
 from sinks.annotation_sink import AnnotationSink
 
 import config
 from tools.video_info import VideoInfo
 from tools.messages import source_message, progress_message, step_message
-from tools.write_csv import output_append, write_csv
+from tools.write_data import csv_append, write_csv
 
 # For debugging
 from icecream import ic
@@ -37,7 +37,7 @@ def main(
     step_message(next(step_count), f"Processor: {'GPU ✅' if torch.cuda.is_available() else 'CPU ⚠️'}")
 
     # Initialize YOLOv10 model
-    detection_sink = DetectionSink(
+    detection_sink = ModelSink(
         weights_path=weights,
         image_size=image_size,
         confidence=confidence,
@@ -82,10 +82,13 @@ def main(
             annotated_image = image.copy()
 
             # YOLO inference
-            detections = detection_sink.detect(image=image)
+            results = detection_sink.detect(image=image)
                 
             # Save object data in list
-            output_data = output_append(output_data, frame_number, detections)
+            output_data = csv_append(output_data, frame_number, results)
+
+            # Convert results to Supervision format
+            detections = sv.Detections.from_ultralytics(results)
 
             # Draw annotations
             annotated_image = annotation_sink.on_detections(detections=detections, image=image)
