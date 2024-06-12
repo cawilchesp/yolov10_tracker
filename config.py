@@ -7,8 +7,8 @@ OUTPUT_FOLDER = ROOT
 MODEL_FOLDER = ROOT / 'models' / 'yolov10'
 
 # Source parameters
-INPUT_VIDEO = 'paradero.mp4'
-OUTPUT_NAME = 'paradero_yolov10'
+INPUT_VIDEO = 'C3_detenido.mp4'
+OUTPUT_NAME = 'C3_detenido_yolov10'
 
 # Deep Learning model configuration
 MODEL_WEIGHTS = 'yolov10x.pt'
