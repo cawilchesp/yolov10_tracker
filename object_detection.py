@@ -91,7 +91,7 @@ def main(
             detections = sv.Detections.from_ultralytics(results)
 
             # Draw annotations
-            annotated_image = annotation_sink.on_detections(detections=detections, image=image)
+            annotated_image = annotation_sink.on_detections(detections=detections, scene=image)
 
             # Save results
             output_writer.write(annotated_image)
